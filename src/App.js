@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./components/home";
+import About from "./components/about";
+import { ThemeContext, themes } from "./context";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.toggleTheme = () => {
+      this.setState((state) => ({
+        theme: state,
+      }));
+    };
+
+    this.state = {
+      theme: themes,
+      toggleTheme: this.toggleTheme,
+    };
+  }
+
+  render() {
+    return (
+      <ThemeContext.Provider value={this.state}>
+        <div className="App">
+          <nav>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+          </nav>
+          <header className="App-header">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="about" element={<About />} />
+            </Routes>
+          </header>
+        </div>
+      </ThemeContext.Provider>
+    );
+  }
 }
 
 export default App;
