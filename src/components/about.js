@@ -8,6 +8,12 @@ import "./about.css";
 
 let classifier;
 
+const modelPath = {
+  model: "./models/model.json",
+  metadata: "./models/metadata.json",
+  weights: "./models/model.weights.bin",
+};
+
 function About() {
   const videoRef = useRef();
   const [start, setStart] = useState(false);
@@ -15,25 +21,36 @@ function About() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    classifier = ml5.imageClassifier("./models/model.json", () => {
-      navigator.mediaDevices
-        .getUserMedia({ video: true, audio: false })
-        .then((stream) => {
-          videoRef.current.srcObject = stream;
-          videoRef.current.play();
-          setLoaded(true);
-        });
+    let options = {
+      inputs: [64, 64, 4],
+      task: "imageClassification",
+      debug: true,
+    };
+    classifier = ml5.imageClassifier({
+      model: "MobileNet",
+      options: options,
+      callback: callback,
     });
   }, []);
 
+  const callback = () => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: false })
+      .then((stream) => {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
+        setLoaded(true);
+      });
+  };
+
   useInterval(() => {
-    if (classifier && start) {
+    if (classifier && start && videoRef.current) {
       classifier.classify(videoRef.current, (error, results) => {
         if (error) {
           console.error(error);
           return;
         }
-        setResult(results);
+        // setResult(results);
         console.log(results);
       });
     }
@@ -59,16 +76,14 @@ function About() {
           <video
             ref={videoRef}
             style={{ transform: "scale(-1, 1)" }}
-            width="300"
-            height="150"
+            width="700"
+            height="700"
           />
           {loaded && (
             <button onClick={() => toggle()}>{start ? "Stop" : "Start"}</button>
           )}
         </div>
-        {result.length > 0 && <div>result[0]</div>}
       </div>
-      {result.length > 0 && <div className="results">{result}</div>}
     </div>
   );
 }
