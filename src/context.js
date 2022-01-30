@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-export const themes = {
+export const items = {
   bottle: {
     lastSeen: moment(),
     location: "Kitchen",
@@ -12,6 +12,6 @@ export const themes = {
   },
 };
 
-export const ThemeContext = React.createContext(
-  themes.dark // default value
+export const ItemContext = React.createContext(
+  items // default value
 );

@@ -3,27 +3,27 @@ import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./components/home";
 import About from "./components/about";
-import { ThemeContext, themes } from "./context";
+import { ItemContext, items } from "./context";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggleTheme = () => {
+    this.toggleItems = () => {
       this.setState((state) => ({
-        theme: state,
+        items: state,
       }));
     };
 
     this.state = {
-      theme: themes,
-      toggleTheme: this.toggleTheme,
+      items: items,
+      toggleItems: this.toggleItems,
     };
   }
 
   render() {
     return (
-      <ThemeContext.Provider value={this.state}>
+      <ItemContext.Provider value={this.state}>
         <div className="App">
           <nav>
             <Link to="/">Home</Link>
@@ -36,7 +36,7 @@ class App extends React.Component {
             </Routes>
           </header>
         </div>
-      </ThemeContext.Provider>
+      </ItemContext.Provider>
     );
   }
 }

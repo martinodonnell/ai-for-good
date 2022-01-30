@@ -1,15 +1,14 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
-import { ThemeContext } from "../context";
+import { ItemContext } from "../context";
 import moment from "moment";
 
 function Home() {
-  const context = useContext(ThemeContext);
+  const context = useContext(ItemContext);
 
   return (
     <div>
-      {Object.keys(context.theme).map((key, index) => {
-        var value = context.theme[key];
+      {Object.keys(context.items).map((key, index) => {
+        var value = context.items[key];
         return (
           <div className="card mb-3" key={index}>
             <div className="card-body">
