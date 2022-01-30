@@ -1,0 +1,1 @@
+{"inputUnits":[64,64,4],"outputUnits":3,"inputs":{"image":{"dtype":"array","min":0,"max":255}},"outputs":{"label":{"dtype":"string","min":0,"max":1,"uniqueValues":["Keep others safe!\nWear your mask!","Bottle","Wallet"],"legend":{"Keep others safe!\nWear your mask!":[1,0,0],"Bottle":[0,1,0],"Wallet":[0,0,1]}}},"isNormalized":true}
